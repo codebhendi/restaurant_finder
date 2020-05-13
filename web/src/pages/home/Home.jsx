@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Backdrop from '@material-ui/core/Backdrop';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import mapboxgl from 'mapbox-gl';
 import Axios from 'axios';
@@ -45,7 +47,7 @@ const Home = () => {
       container: ref,
       style: 'mapbox://styles/mapbox/streets-v11',
       center: [latLng.lng, latLng.lat],
-      zoom: 15,
+      zoom: 10,
     });
 
     map.on('click', handleClick);
@@ -72,10 +74,14 @@ const Home = () => {
   };
 
   return (
-    <>
+    <Container>
       <Backdrop className={classes.backdrop} open={loading}>
         <CircularProgress color="inherit" />
       </Backdrop>
+      <Typography>
+        {`Latitude; ${latLng.lat} `}
+        {`Longitude; ${latLng.lng}`}
+      </Typography>
       <div className={classes.container} ref={(el) => { ref = el; }} />
       <Button variant="outlined" onClick={getRestaurant}>Get Restaurants</Button>
       <TableContainer>
@@ -95,14 +101,14 @@ const Home = () => {
                 <TableCell>{restaurant.location.address}</TableCell>
                 <TableCell>{restaurant.cuisines}</TableCell>
                 <TableCell>
-                  {`Lat: ${restaurant.location.latitude}, Log: ${restaurant.location.longitude}`}
+                  {`Latitude: ${restaurant.location.latitude}, Longitude: ${restaurant.location.longitude}`}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Container>
   );
 };
 
